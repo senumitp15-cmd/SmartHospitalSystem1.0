@@ -2,7 +2,7 @@
 
 int main(){
 
-printf("Hi");
+printf("Smart Hospital & Resource Allocation System\n");
 return 0;
 
 }
