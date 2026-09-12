@@ -53,6 +53,10 @@ const int wardCapacity[4] = {
     10,
     5
 };
+
+/* Bed Status Tracking */
+int bedOccupancy[4][20] = {0};
+
 int main(){
 
 printf("Smart Hospital & Resource Allocation System\n");
