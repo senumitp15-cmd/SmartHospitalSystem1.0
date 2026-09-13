@@ -1,5 +1,7 @@
 #include<stdio.h>
 
+#define PATIENT_LIMIT 100
+
 const int specialtyID[4] = {1, 2, 3, 4};
 
 const char specialtyName[4][30] = {
@@ -57,10 +59,22 @@ const int wardCapacity[4] = {
 /* Bed Status Tracking */
 int bedOccupancy[4][20] = {0};
 
+/* Patient info */
+char patientName[PATIENT_LIMIT][50];
+int patientAge[PATIENT_LIMIT];
+int patientUrgency[PATIENT_LIMIT];
+int patientSpecialty[PATIENT_LIMIT];
+int patientAdmission[PATIENT_LIMIT];
+int patientWard[PATIENT_LIMIT];
+int patientDays[PATIENT_LIMIT];
+
+
+void registerPatient(int index);
 int main(){
 
 int i,j;
 printf("Smart Hospital & Resource Allocation System\n");
+registerPatient(0);
 printf("Bed Status\n");
 
 for(i=0;i<4;i++){
@@ -69,10 +83,10 @@ for(i=0;i<4;i++){
     for(j=0; j< wardCapacity[i]; j++)
     {
         if(bedOccupancy[i][j]==0){
-            printf("Available");
+            printf("Available ");
         }
         else{
-            printf("Occupied");
+            printf("Occupied ");
         }
     }
     printf("\n");
@@ -80,4 +94,33 @@ for(i=0;i<4;i++){
 
 return 0;
 
+}
+
+/*Patient registration function*/
+void registerPatient(int index)
+{
+   int i;
+printf("\nEnter patient name: ");
+fgets(patientName[index], 50, stdin);
+
+/* Remove newline from the name */
+
+
+for(i = 0; patientName[index][i] != '\0'; i++)
+{
+    if(patientName[index][i] == '\n')
+    {
+        patientName[index][i] = '\0';
+        break;
+    }
+}
+
+printf("Enter age: ");
+scanf("%d", &patientAge[index]);
+
+printf("Enter urgency (1-Normal, 2-Urgent, 3-Critical): ");
+scanf("%d", &patientUrgency[index]);
+
+printf("Enter specialty ID (1-4): ");
+scanf("%d", &patientSpecialty[index]);
 }
