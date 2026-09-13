@@ -59,7 +59,25 @@ int bedOccupancy[4][20] = {0};
 
 int main(){
 
+int i,j;
 printf("Smart Hospital & Resource Allocation System\n");
+printf("Bed Status\n");
+
+for(i=0;i<4;i++){
+    printf("Ward Number %d :", wardID[i]);
+
+    for(j=0; j< wardCapacity[i]; j++)
+    {
+        if(bedOccupancy[i][j]==0){
+            printf("Available");
+        }
+        else{
+            printf("Occupied");
+        }
+    }
+    printf("\n");
+}
+
 return 0;
 
 }
