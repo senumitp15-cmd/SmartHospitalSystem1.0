@@ -125,4 +125,24 @@ printf("Enter specialty ID (1-4): ");
 scanf("%d", &patientSpecialty[index]);
 
 printf("Selected Specialty: %s\n", specialtyName[patientSpecialty[index] - 1]);
+
+printf("\nDo you want to admit the patient? (1-Yes, 0-No): ");
+scanf("%d", &patientAdmission[index]);
+
+if(patientAdmission[index] == 1)
+{
+    printf("Enter ward ID (1-4): ");
+    scanf("%d", &patientWard[index]);
+
+    printf("Enter number of days: ");
+    scanf("%d", &patientDays[index]);
 }
+else
+{
+    patientWard[index] = 0;
+    patientDays[index] = 0;
+}
+
+}
+
+
