@@ -123,4 +123,6 @@ scanf("%d", &patientUrgency[index]);
 
 printf("Enter specialty ID (1-4): ");
 scanf("%d", &patientSpecialty[index]);
+
+printf("Selected Specialty: %s\n", specialtyName[patientSpecialty[index] - 1]);
 }
