@@ -136,6 +136,19 @@ if(patientAdmission[index] == 1)
 
     printf("Enter number of days: ");
     scanf("%d", &patientDays[index]);
+
+for(i = 0; i < wardCapacity[patientWard[index] - 1]; i++)
+{
+        if(bedOccupancy[patientWard[index] - 1][i] == 0)
+        {
+            bedOccupancy[patientWard[index] - 1][i] = 1;
+
+            printf("Bed allocated: %d\n", i + 1);
+
+            break;
+        }
+}
+
 }
 else
 {
