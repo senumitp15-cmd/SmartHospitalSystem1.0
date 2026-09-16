@@ -105,6 +105,7 @@ void registerPatient(int index)
 {
    int i;
    int waitingTime;
+   double surcharge;
 printf("\nEnter patient name: ");
 fgets(patientName[index], 50, stdin);
 
@@ -137,6 +138,23 @@ waitingTime = queueCount[patientSpecialty[index] - 1]
 printf("Estimated Waiting Time: %d minutes\n", waitingTime);
 
 queueCount[patientSpecialty[index] - 1]++;
+
+/* Emergency surcharge calculation */
+
+if(patientUrgency[index] == 1)
+{
+    surcharge = 0;
+}
+else if(patientUrgency[index] == 2)
+{
+    surcharge = consultationFee[patientSpecialty[index] - 1] * 0.20;
+}
+else
+{
+    surcharge = consultationFee[patientSpecialty[index] - 1] * 0.50;
+}
+
+printf("Emergency Surcharge: %.2f\n", surcharge);
 
 printf("\nDo you want to admit the patient? (1-Yes, 0-No): ");
 scanf("%d", &patientAdmission[index]);
