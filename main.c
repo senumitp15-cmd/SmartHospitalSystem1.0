@@ -59,6 +59,9 @@ const int wardCapacity[4] = {
 /* Bed Status Tracking */
 int bedOccupancy[4][20] = {0};
 
+/* Queue Count */
+int queueCount[4] = {0};
+
 /* Patient info */
 char patientName[PATIENT_LIMIT][50];
 int patientAge[PATIENT_LIMIT];
@@ -73,6 +76,7 @@ void registerPatient(int index);
 int main(){
 
 int i,j;
+
 printf("Smart Hospital & Resource Allocation System\n");
 registerPatient(0);
 printf("Bed Status\n");
@@ -100,6 +104,7 @@ return 0;
 void registerPatient(int index)
 {
    int i;
+   int waitingTime;
 printf("\nEnter patient name: ");
 fgets(patientName[index], 50, stdin);
 
@@ -125,6 +130,13 @@ printf("Enter specialty ID (1-4): ");
 scanf("%d", &patientSpecialty[index]);
 
 printf("Selected Specialty: %s\n", specialtyName[patientSpecialty[index] - 1]);
+
+waitingTime = queueCount[patientSpecialty[index] - 1]
+              * consultationTime[patientSpecialty[index] - 1];
+
+printf("Estimated Waiting Time: %d minutes\n", waitingTime);
+
+queueCount[patientSpecialty[index] - 1]++;
 
 printf("\nDo you want to admit the patient? (1-Yes, 0-No): ");
 scanf("%d", &patientAdmission[index]);
