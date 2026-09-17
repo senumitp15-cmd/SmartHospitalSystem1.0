@@ -107,7 +107,9 @@ void registerPatient(int index)
    int waitingTime;
    double surcharge;
    double wardCost;
-double grossBill;
+   double grossBill;
+   double subsidy;
+   double finalPayable;
 printf("\nEnter patient name: ");
 fgets(patientName[index], 50, stdin);
 
@@ -176,6 +178,20 @@ grossBill = consultationFee[patientSpecialty[index] - 1]+ surcharge + wardCost;
 
 printf("Gross Bill: %.2f\n", grossBill);
 
+if(patientAge[index] < 5 || patientAge[index] > 65)
+{
+    subsidy = grossBill * 0.15;
+}
+else
+{
+    subsidy = 0;
+}
+
+finalPayable = grossBill - subsidy;
+
+printf("Age Subsidy: %.2f\n", subsidy);
+printf("Final Payable Amount: %.2f\n", finalPayable);
+
 for(i = 0; i < wardCapacity[patientWard[index] - 1]; i++)
 {
         if(bedOccupancy[patientWard[index] - 1][i] == 0)
@@ -201,6 +217,20 @@ else
 
     printf("Ward Stay Cost: %.2f\n", wardCost);
     printf("Gross Bill: %.2f\n", grossBill);
+
+    if(patientAge[index] < 5 || patientAge[index] > 65)
+{
+    subsidy = grossBill * 0.15;
+}
+else
+{
+    subsidy = 0;
+}
+
+finalPayable = grossBill - subsidy;
+
+printf("Age Subsidy: %.2f\n", subsidy);
+printf("Final Payable Amount: %.2f\n", finalPayable);
 }
 
 }
