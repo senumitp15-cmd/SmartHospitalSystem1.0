@@ -106,6 +106,8 @@ void registerPatient(int index)
    int i;
    int waitingTime;
    double surcharge;
+   double wardCost;
+double grossBill;
 printf("\nEnter patient name: ");
 fgets(patientName[index], 50, stdin);
 
@@ -167,6 +169,13 @@ if(patientAdmission[index] == 1)
     printf("Enter number of days: ");
     scanf("%d", &patientDays[index]);
 
+wardCost = patientDays[index] * dailyRate[patientWard[index] - 1];
+printf("Ward Stay Cost: %.2f\n", wardCost);
+
+grossBill = consultationFee[patientSpecialty[index] - 1]+ surcharge + wardCost;
+
+printf("Gross Bill: %.2f\n", grossBill);
+
 for(i = 0; i < wardCapacity[patientWard[index] - 1]; i++)
 {
         if(bedOccupancy[patientWard[index] - 1][i] == 0)
@@ -184,6 +193,14 @@ else
 {
     patientWard[index] = 0;
     patientDays[index] = 0;
+    wardCost = 0;
+
+    grossBill = consultationFee[patientSpecialty[index] - 1]
+                + surcharge
+                + wardCost;
+
+    printf("Ward Stay Cost: %.2f\n", wardCost);
+    printf("Gross Bill: %.2f\n", grossBill);
 }
 
 }
