@@ -64,6 +64,7 @@ int queueCount[4] = {0};
 
 /* Patient info */
 char patientName[PATIENT_LIMIT][50];
+int patientCount = 0;
 int patientAge[PATIENT_LIMIT];
 int patientUrgency[PATIENT_LIMIT];
 int patientSpecialty[PATIENT_LIMIT];
@@ -79,12 +80,27 @@ double calculateWardCost(int ward, int days);
 double calculateGrossBill(int specialty, double surcharge, double wardCost);
 double calculateSubsidy(int age, double grossBill);
 double calculateFinalPayable(double grossBill, double subsidy);
+
 int main(){
 
 int i,j;
+int choice;
 
 printf("Smart Hospital & Resource Allocation System\n");
-registerPatient(0);
+
+while(patientCount < PATIENT_LIMIT)
+{
+    registerPatient(patientCount);
+    patientCount++;
+    printf("\nDo you want to register another patient? (1-Yes, 0-No): ");
+    scanf("%d", &choice);
+
+    if(choice == 0)
+    {
+        break;
+    }
+
+}
 printf("Bed Status\n");
 
 for(i=0;i<4;i++){
@@ -107,6 +123,7 @@ return 0;
 }
 
 /*Patient registration function*/
+
 void registerPatient(int index)
 {
    int i;
@@ -116,7 +133,14 @@ void registerPatient(int index)
    double grossBill;
    double subsidy;
    double finalPayable;
+
 printf("\nEnter patient name: ");
+
+if(index > 0)
+{
+    getchar();
+}
+
 fgets(patientName[index], 50, stdin);
 
 /* Remove newline from the name */
