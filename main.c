@@ -73,6 +73,12 @@ int patientDays[PATIENT_LIMIT];
 
 
 void registerPatient(int index);
+int calculateWaitingTime(int specialty);
+double calculateSurcharge(int specialty, int urgency);
+double calculateWardCost(int ward, int days);
+double calculateGrossBill(int specialty, double surcharge, double wardCost);
+double calculateSubsidy(int age, double grossBill);
+double calculateFinalPayable(double grossBill, double subsidy);
 int main(){
 
 int i,j;
@@ -136,27 +142,13 @@ scanf("%d", &patientSpecialty[index]);
 
 printf("Selected Specialty: %s\n", specialtyName[patientSpecialty[index] - 1]);
 
-waitingTime = queueCount[patientSpecialty[index] - 1]
-              * consultationTime[patientSpecialty[index] - 1];
+waitingTime = calculateWaitingTime(patientSpecialty[index]);
 
 printf("Estimated Waiting Time: %d minutes\n", waitingTime);
 
 queueCount[patientSpecialty[index] - 1]++;
 
-/* Emergency surcharge calculation */
-
-if(patientUrgency[index] == 1)
-{
-    surcharge = 0;
-}
-else if(patientUrgency[index] == 2)
-{
-    surcharge = consultationFee[patientSpecialty[index] - 1] * 0.20;
-}
-else
-{
-    surcharge = consultationFee[patientSpecialty[index] - 1] * 0.50;
-}
+surcharge = calculateSurcharge(patientSpecialty[index], patientUrgency[index]);
 
 printf("Emergency Surcharge: %.2f\n", surcharge);
 
@@ -171,23 +163,16 @@ if(patientAdmission[index] == 1)
     printf("Enter number of days: ");
     scanf("%d", &patientDays[index]);
 
-wardCost = patientDays[index] * dailyRate[patientWard[index] - 1];
+wardCost = calculateWardCost(patientWard[index], patientDays[index]);
 printf("Ward Stay Cost: %.2f\n", wardCost);
 
-grossBill = consultationFee[patientSpecialty[index] - 1]+ surcharge + wardCost;
+grossBill = calculateGrossBill(patientSpecialty[index], surcharge, wardCost);
 
 printf("Gross Bill: %.2f\n", grossBill);
 
-if(patientAge[index] < 5 || patientAge[index] > 65)
-{
-    subsidy = grossBill * 0.15;
-}
-else
-{
-    subsidy = 0;
-}
+subsidy = calculateSubsidy(patientAge[index], grossBill);
 
-finalPayable = grossBill - subsidy;
+finalPayable = calculateFinalPayable(grossBill, subsidy);
 
 printf("Age Subsidy: %.2f\n", subsidy);
 printf("Final Payable Amount: %.2f\n", finalPayable);
@@ -209,30 +194,76 @@ else
 {
     patientWard[index] = 0;
     patientDays[index] = 0;
-    wardCost = 0;
 
-    grossBill = consultationFee[patientSpecialty[index] - 1]
-                + surcharge
-                + wardCost;
+    wardCost = calculateWardCost(patientWard[index], patientDays[index]);
+
+    grossBill = calculateGrossBill(patientSpecialty[index], surcharge, wardCost);
+
 
     printf("Ward Stay Cost: %.2f\n", wardCost);
     printf("Gross Bill: %.2f\n", grossBill);
 
-    if(patientAge[index] < 5 || patientAge[index] > 65)
-{
-    subsidy = grossBill * 0.15;
-}
-else
-{
-    subsidy = 0;
-}
+    subsidy = calculateSubsidy(patientAge[index], grossBill);
 
-finalPayable = grossBill - subsidy;
+    finalPayable = calculateFinalPayable(grossBill, subsidy);
 
 printf("Age Subsidy: %.2f\n", subsidy);
 printf("Final Payable Amount: %.2f\n", finalPayable);
 }
 
 }
+/*waiting time*/
+int calculateWaitingTime(int specialty)
+{
+    return queueCount[specialty - 1] * consultationTime[specialty - 1];
+}
 
+/* Emergency Surcharge*/
+double calculateSurcharge(int specialty, int urgency)
+{
+    if(urgency == 1)
+    {
+        return 0;
+    }
+    else if(urgency == 2)
+    {
+        return consultationFee[specialty - 1] * 0.20;
+    }
+    else
+    {
+        return consultationFee[specialty - 1] * 0.50;
+    }
+}
 
+/* ward stay cost*/
+double calculateWardCost(int ward, int days)
+{
+    if(ward == 0)
+    {
+        return 0;
+    }
+
+    return days * dailyRate[ward - 1];
+}
+
+/*gross bill*/
+double calculateGrossBill(int specialty, double surcharge, double wardCost)
+{
+    return consultationFee[specialty - 1] + surcharge + wardCost;
+}
+
+/*Age subsidy discount*/
+double calculateSubsidy(int age, double grossBill)
+{
+    if(age < 5 || age > 65)
+    {
+        return grossBill * 0.15;
+    }
+
+    return 0;
+}
+/* final amount payable*/
+double calculateFinalPayable(double grossBill, double subsidy)
+{
+    return grossBill - subsidy;
+}
