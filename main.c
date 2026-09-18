@@ -71,6 +71,11 @@ int patientSpecialty[PATIENT_LIMIT];
 int patientAdmission[PATIENT_LIMIT];
 int patientWard[PATIENT_LIMIT];
 int patientDays[PATIENT_LIMIT];
+double patientSurcharge[PATIENT_LIMIT];
+double patientWardCost[PATIENT_LIMIT];
+double patientGrossBill[PATIENT_LIMIT];
+double patientSubsidy[PATIENT_LIMIT];
+double patientFinalPayable[PATIENT_LIMIT];
 
 
 void registerPatient(int index);
@@ -174,6 +179,8 @@ queueCount[patientSpecialty[index] - 1]++;
 
 surcharge = calculateSurcharge(patientSpecialty[index], patientUrgency[index]);
 
+patientSurcharge[index] = surcharge;
+
 printf("Emergency Surcharge: %.2f\n", surcharge);
 
 printf("\nDo you want to admit the patient? (1-Yes, 0-No): ");
@@ -188,15 +195,24 @@ if(patientAdmission[index] == 1)
     scanf("%d", &patientDays[index]);
 
 wardCost = calculateWardCost(patientWard[index], patientDays[index]);
+
+patientWardCost[index] = wardCost;
+
 printf("Ward Stay Cost: %.2f\n", wardCost);
 
 grossBill = calculateGrossBill(patientSpecialty[index], surcharge, wardCost);
+
+patientGrossBill[index] = grossBill;
 
 printf("Gross Bill: %.2f\n", grossBill);
 
 subsidy = calculateSubsidy(patientAge[index], grossBill);
 
+patientSubsidy[index] = subsidy;
+
 finalPayable = calculateFinalPayable(grossBill, subsidy);
+
+patientFinalPayable[index] = finalPayable;
 
 printf("Age Subsidy: %.2f\n", subsidy);
 printf("Final Payable Amount: %.2f\n", finalPayable);
@@ -221,15 +237,22 @@ else
 
     wardCost = calculateWardCost(patientWard[index], patientDays[index]);
 
+    patientWardCost[index] = wardCost;
+
     grossBill = calculateGrossBill(patientSpecialty[index], surcharge, wardCost);
 
+    patientGrossBill[index] = grossBill;
 
     printf("Ward Stay Cost: %.2f\n", wardCost);
     printf("Gross Bill: %.2f\n", grossBill);
 
     subsidy = calculateSubsidy(patientAge[index], grossBill);
 
+    patientSubsidy[index] = subsidy;
+
     finalPayable = calculateFinalPayable(grossBill, subsidy);
+
+    patientFinalPayable[index] = finalPayable;
 
 printf("Age Subsidy: %.2f\n", subsidy);
 printf("Final Payable Amount: %.2f\n", finalPayable);
