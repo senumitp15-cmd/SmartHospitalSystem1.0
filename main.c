@@ -85,6 +85,7 @@ double calculateWardCost(int ward, int days);
 double calculateGrossBill(int specialty, double surcharge, double wardCost);
 double calculateSubsidy(int age, double grossBill);
 double calculateFinalPayable(double grossBill, double subsidy);
+void sortAndDisplayPriorityQueue();
 
 int main(){
 
@@ -105,7 +106,8 @@ while(patientCount < PATIENT_LIMIT)
         break;
     }
 
-}
+}sortAndDisplayPriorityQueue();
+
 printf("Bed Status\n");
 
 for(i=0;i<4;i++){
@@ -125,6 +127,56 @@ for(i=0;i<4;i++){
 
 return 0;
 
+}
+
+/* Priority Queue Sorting */
+void sortAndDisplayPriorityQueue()
+{
+    int order[PATIENT_LIMIT];
+    int i;
+    int j;
+    int temp;
+
+    for(i = 0; i < patientCount; i++)
+    {
+        order[i] = i;
+    }
+
+    for(i = 0; i < patientCount - 1; i++)
+    {
+        for(j = 0; j < patientCount - 1 - i; j++)
+        {
+            if(patientUrgency[order[j]] < patientUrgency[order[j + 1]])
+            {
+                temp = order[j];
+                order[j] = order[j + 1];
+                order[j + 1] = temp;
+            }
+        }
+    }
+
+    printf("\nPriority Queue\n");
+
+    for(i = 0; i < patientCount; i++)
+    {
+        printf("\nPatient Name: %s\n", patientName[order[i]]);
+
+        if(patientUrgency[order[i]] == 3)
+        {
+            printf("Urgency: Critical\n");
+        }
+        else if(patientUrgency[order[i]] == 2)
+        {
+            printf("Urgency: Urgent\n");
+        }
+        else
+        {
+            printf("Urgency: Normal\n");
+        }
+
+        printf("Final Payable Amount: %.2f\n",
+               patientFinalPayable[order[i]]);
+    }
 }
 
 /*Patient registration function*/
@@ -147,8 +199,6 @@ if(index > 0)
 }
 
 fgets(patientName[index], 50, stdin);
-
-/* Remove newline from the name */
 
 
 for(i = 0; patientName[index][i] != '\0'; i++)
