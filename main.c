@@ -90,6 +90,8 @@ double calculateFinalPayable(double grossBill, double subsidy);
 void sortAndDisplayPriorityQueue();
 void printBill(int index);
 void displayReports();
+void saveBedStatus();
+void savePatientRecords();
 
 int main()
 {
@@ -107,7 +109,8 @@ int main()
         printf("2. Display Priority Queue\n");
         printf("3. Display Bed Status\n");
         printf("4. Generate Hospital Reports\n");
-        printf("5. Exit\n");
+        printf("5. Save Records to Files\n");
+        printf("6. Exit\n");
         printf("========================================\n");
         printf("Enter your choice: ");
         scanf("%d", &choice);
@@ -157,14 +160,19 @@ int main()
         }
         else if(choice == 5)
         {
-            printf("\nExiting Smart Hospital System...\n");
+            saveBedStatus();
+            savePatientRecords();
+        }
+        else if(choice == 6)
+        {
+             printf("\nExiting Smart Hospital System...\n");
         }
         else
         {
             printf("\nInvalid choice. Please try again.\n");
         }
 
-    } while(choice != 5);
+    } while(choice != 6);
 
     return 0;
 }
@@ -340,7 +348,7 @@ void registerPatient(int index)
 printf("\nEnter patient name: ");
 
 getchar();
-worksfgets(patientName[index], 50, stdin);
+fgets(patientName[index], 50, stdin);
 
 
 for(i = 0; patientName[index][i] != '\0'; i++)
@@ -592,4 +600,104 @@ void displayReports()
         printf("Total Bill   : LKR %.2f\n",
                patientFinalPayable[highestIndex]);
     }
+}
+
+void saveBedStatus()
+{
+    FILE *file;
+    int i, j;
+
+    file = fopen("beds_status.txt", "w");
+
+    if(file == NULL)
+    {
+        printf("\nError opening beds_status.txt\n");
+        return;
+    }
+
+    fprintf(file, "SMART HOSPITAL BED STATUS\n");
+    fprintf(file, "=========================\n\n");
+
+    for(i = 0; i < 4; i++)
+    {
+        fprintf(file, "Ward Number %d : %s\n", wardID[i], wardName[i]);
+
+        for(j = 0; j < wardCapacity[i]; j++)
+        {
+            if(bedOccupancy[i][j] == 0)
+            {
+                fprintf(file, "Bed %d : Available\n", j + 1);
+            }
+            else
+            {
+                fprintf(file, "Bed %d : Occupied\n", j + 1);
+            }
+        }
+
+        fprintf(file, "\n");
+    }
+
+    fclose(file);
+
+    printf("\nBed status saved to beds_status.txt\n");
+}
+
+void savePatientRecords()
+{
+    FILE *file;
+    int i;
+
+    file = fopen("patient_records.txt", "w");
+
+    if(file == NULL)
+    {
+        printf("\nError opening patient_records.txt\n");
+        return;
+    }
+    fprintf(file, "SMART HOSPITAL PATIENT RECORDS\n");
+    fprintf(file, "==============================\n\n");
+
+    for(i = 0; i < patientCount; i++)
+    {
+        fprintf(file, "Patient ID       : PAT-%04d\n", i + 1001);
+        fprintf(file, "Patient Name     : %s\n", patientName[i]);
+        fprintf(file, "Age              : %d\n", patientAge[i]);
+        fprintf(file, "Urgency          : %d\n", patientUrgency[i]);
+        fprintf(file, "Specialty        : %s\n",
+                specialtyName[patientSpecialty[i] - 1]);
+
+        if(patientAdmission[i] == 1)
+        {
+            fprintf(file, "Admission        : Admitted\n");
+            fprintf(file, "Ward             : %s\n",
+                    wardName[patientWard[i] - 1]);
+            fprintf(file, "Bed              : %d\n",
+                    patientBed[i]);
+            fprintf(file, "Days             : %d\n",
+                    patientDays[i]);
+        }
+        else
+        {
+            fprintf(file, "Admission        : Outpatient\n");
+        }
+
+        fprintf(file, "Waiting Time     : %d minutes\n",
+                patientWaitingTime[i]);
+        fprintf(file, "Surcharge        : LKR %.2f\n",
+                patientSurcharge[i]);
+        fprintf(file, "Ward Cost        : LKR %.2f\n",
+                patientWardCost[i]);
+        fprintf(file, "Gross Bill       : LKR %.2f\n",
+                patientGrossBill[i]);
+        fprintf(file, "Age Subsidy      : LKR %.2f\n",
+                patientSubsidy[i]);
+        fprintf(file, "Final Payable    : LKR %.2f\n",
+                patientFinalPayable[i]);
+
+        fprintf(file, "------------------------------\n");
+    }
+
+    fclose(file);
+
+    printf("\nPatient records saved to patient_records.txt\n");
 }

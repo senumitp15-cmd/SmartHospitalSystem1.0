@@ -1,0 +1,56 @@
+SMART HOSPITAL BED STATUS
+=========================
+
+Ward Number 1 : General Ward
+Bed 1 : Occupied
+Bed 2 : Occupied
+Bed 3 : Available
+Bed 4 : Available
+Bed 5 : Available
+Bed 6 : Available
+Bed 7 : Available
+Bed 8 : Available
+Bed 9 : Available
+Bed 10 : Available
+Bed 11 : Available
+Bed 12 : Available
+Bed 13 : Available
+Bed 14 : Available
+Bed 15 : Available
+Bed 16 : Available
+Bed 17 : Available
+Bed 18 : Available
+Bed 19 : Available
+Bed 20 : Available
+
+Ward Number 2 : Paediatric Ward
+Bed 1 : Available
+Bed 2 : Available
+Bed 3 : Available
+Bed 4 : Available
+Bed 5 : Available
+Bed 6 : Available
+Bed 7 : Available
+Bed 8 : Available
+Bed 9 : Available
+Bed 10 : Available
+
+Ward Number 3 : Surgical Ward
+Bed 1 : Available
+Bed 2 : Available
+Bed 3 : Available
+Bed 4 : Available
+Bed 5 : Available
+Bed 6 : Available
+Bed 7 : Available
+Bed 8 : Available
+Bed 9 : Available
+Bed 10 : Available
+
+Ward Number 4 : ICU(Intensive Care Unit)
+Bed 1 : Available
+Bed 2 : Available
+Bed 3 : Available
+Bed 4 : Available
+Bed 5 : Available
+

@@ -1,0 +1,35 @@
+SMART HOSPITAL PATIENT RECORDS
+==============================
+
+Patient ID       : PAT-1001
+Patient Name     : senu
+Age              : 1
+Urgency          : 1
+Specialty        : General Practice (OPD)
+Admission        : Admitted
+Ward             : General Ward
+Bed              : 1
+Days             : 1
+Waiting Time     : 0 minutes
+Surcharge        : LKR 0.00
+Ward Cost        : LKR 3000.00
+Gross Bill       : LKR 4500.00
+Age Subsidy      : LKR 675.00
+Final Payable    : LKR 3825.00
+------------------------------
+Patient ID       : PAT-1002
+Patient Name     : methii
+Age              : 2
+Urgency          : 2
+Specialty        : General Practice (OPD)
+Admission        : Admitted
+Ward             : General Ward
+Bed              : 2
+Days             : 1
+Waiting Time     : 15 minutes
+Surcharge        : LKR 300.00
+Ward Cost        : LKR 3000.00
+Gross Bill       : LKR 4800.00
+Age Subsidy      : LKR 720.00
+Final Payable    : LKR 4080.00
+------------------------------
