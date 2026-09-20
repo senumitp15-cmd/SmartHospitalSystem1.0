@@ -91,49 +91,82 @@ void sortAndDisplayPriorityQueue();
 void printBill(int index);
 void displayReports();
 
-int main(){
-
-int i,j;
-int choice;
-
-printf("Smart Hospital & Resource Allocation System\n");
-
-while(patientCount < PATIENT_LIMIT)
+int main()
 {
-    registerPatient(patientCount);
-    patientCount++;
-    printf("\nDo you want to register another patient? (1-Yes, 0-No): ");
-    scanf("%d", &choice);
+    int i, j;
+    int choice;
 
-    if(choice == 0)
+    printf("Smart Hospital & Resource Allocation System\n");
+
+    do
     {
-        break;
-    }
+        printf("\n========================================\n");
+        printf("          SMART HOSPITAL SYSTEM\n");
+        printf("========================================\n");
+        printf("1. Register Patient\n");
+        printf("2. Display Priority Queue\n");
+        printf("3. Display Bed Status\n");
+        printf("4. Generate Hospital Reports\n");
+        printf("5. Exit\n");
+        printf("========================================\n");
+        printf("Enter your choice: ");
+        scanf("%d", &choice);
 
-}
-sortAndDisplayPriorityQueue();
-
-printf("Bed Status\n");
-
-for(i=0;i<4;i++){
-    printf("Ward Number %d :", wardID[i]);
-
-    for(j=0; j< wardCapacity[i]; j++)
-    {
-        if(bedOccupancy[i][j]==0){
-            printf("Available ");
+        if(choice == 1)
+        {
+            if(patientCount < PATIENT_LIMIT)
+            {
+                registerPatient(patientCount);
+                patientCount++;
+            }
+            else
+            {
+                printf("\nPatient limit reached.\n");
+            }
         }
-        else{
-            printf("Occupied ");
+        else if(choice == 2)
+        {
+            sortAndDisplayPriorityQueue();
         }
-    }
-    printf("\n");
-}
+        else if(choice == 3)
+        {
+            printf("\nBed Status\n");
 
-displayReports();
+            for(i = 0; i < 4; i++)
+            {
+                printf("Ward Number %d : ", wardID[i]);
 
-return 0;
+                for(j = 0; j < wardCapacity[i]; j++)
+                {
+                    if(bedOccupancy[i][j] == 0)
+                    {
+                        printf("Available ");
+                    }
+                    else
+                    {
+                        printf("Occupied ");
+                    }
+                }
 
+                printf("\n");
+            }
+        }
+        else if(choice == 4)
+        {
+            displayReports();
+        }
+        else if(choice == 5)
+        {
+            printf("\nExiting Smart Hospital System...\n");
+        }
+        else
+        {
+            printf("\nInvalid choice. Please try again.\n");
+        }
+
+    } while(choice != 5);
+
+    return 0;
 }
 
 /* Priority Queue Sorting */
@@ -306,12 +339,8 @@ void registerPatient(int index)
 
 printf("\nEnter patient name: ");
 
-if(index > 0)
-{
-    getchar();
-}
-
-fgets(patientName[index], 50, stdin);
+getchar();
+worksfgets(patientName[index], 50, stdin);
 
 
 for(i = 0; patientName[index][i] != '\0'; i++)
